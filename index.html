@@ -77,7 +77,48 @@ const CONTROLLED_NL=[{"category":"V143","nl":"What does an ECHS referral mean?",
 const NL_INDEX=new Map();
 
 for(const nl of CONTROLLED_NL){const base=QA_INDEX.get(controlledKey(nl.base_q)); if(base) NL_INDEX.set(controlledKey(nl.nl),base);}
-function getResult(q){
+
+/* R3.3.0 STAGING — 89 APPROVED REIMB/DENTAL QA */
+const R330_BASE = {
+  "What is Reimbursement ?":"Reimbursement at ECHS is to reimburse the money spent by a Beneficiary for Treatment & Medicines",
+  "What expenses are Reimbursed ?":"Expenses incurred for purchase of medicines, Treatment at Non-Empaneled Hospital,  and few other areas",
+  "If I buy medicines from a pharmacy , can I get 100 % reimbursement ?":"When the Polyclinic issues a Non Availability (NA ) certificate which is an endorsement in the Prescription , you are allowed to purchase as per the prescription and get 100 % reimbursement",
+  "Is there a facility to complete reimbursement claim online?":"Reimbursement claim can be completed online. After this original documents such as Bills , Reports, etc along with a signed contingent bill must be submitted to Parent Polyclinic to process the claim.",
+  "Is there any facility to find the status of my claim?":"You find out the Claim Status using ECHS Mobile App or using a computer accessing the BPA portal. You need to have the Claim ID for this tracking.",
+  "Who will give the claim ID?":"If you complete claim online , claim ID is provided automatically. If you are submitting the claim manually at polyclinic, the billing section will provide the claim ID after they upload in the online system",
+  "How long does it take to get reimbursement amount in my bank?":"Typically, the NA Medicines purchased by you takes about 2 to 3 months provided you have submitted all documents",
+  "Do I have to fill up a form to get Non-Availability (NA) certificate for Medicines":"The prescription given to you during medicine collection at the Polyclinic is the NA certificate. The NA medicines will be indicated on the prescription , signed by Pharmacist & OIC Polyclinic.",
+  "What documents are to be submitted for claiming reimbursement of NA medicines purchased?":"Medicine bill & Prescription with NA endorsement in original , copy of cancelled cheque & ECHS Card",
+  "What is the time limit for submission of original medicine claim to Polyclinic?":"Within 60 days of medicine bill, you must submit the claim",
+  "Is there a waiver facility available for non-submission of medicine claim within 60 days?":"Waiver can be given by Director Regional Center / CO ECHS",
+  "Is there maximum number of days for which medicines can be purchased against a NA certificate?":"Maximum number of days is 30 days and value not exceeding Rs 25000.00",
+  "Is Reimbursement of Treatment at a Non Empanelled Hospital allowed ?":"Reimbursement is allowed  for - Treatment under Emergency Medical condition at a Non-Empanelled Hospital is allowed. In addition under special condition prior approval is given for treatment at Non Empanelled Hospital",
+  "For reimbursement of treatment at an Non Empaneled Hospital what documents are to be submitted with the claim?":"Discharge summary , Bill summary & detailed bill , Investigation reports , Images and in general every record against which payment is made are to be submitted in original to Parent polyclinic.",
+  "What are the Dental Treatment available for ECHS Beneficiaries?":"Watch Video V 152 in my You Tube Channel HELPING HANDS FOR ECHS"
+};
+function r330Norm(x){return String(x||"").toLowerCase().replace(/[?!.:,()%]/g," ").replace(/\s+/g," ").trim();}
+function r330Get(q){
+  const n=r330Norm(q);
+  for(const k in R330_BASE) if(n===r330Norm(k)) return R330_BASE[k];
+  if(/dental/.test(n)) return R330_BASE["What are the Dental Treatment available for ECHS Beneficiaries?"];
+  if(/reimbursement/.test(n) && (/(mean|purpose|what money|spend money)/.test(n))) return R330_BASE["What is Reimbursement ?"];
+  if(/non[- ]?empaneled/.test(n) && /(emergency|special approval|specially approved|allowed for reimbursement|reimbursable)/.test(n)) return R330_BASE["Is Reimbursement of Treatment at a Non Empanelled Hospital allowed ?"];
+  if(/non[- ]?empaneled/.test(n) && /(document|discharge|bill|report|image|original record|submit)/.test(n)) return R330_BASE["For reimbursement of treatment at an Non Empaneled Hospital what documents are to be submitted with the claim?"];
+  if(/waiver|60[- ]day/.test(n) && /(waiv|miss|late|deadline|requirement)/.test(n)) return R330_BASE["Is there a waiver facility available for non-submission of medicine claim within 60 days?"];
+  if(/na certificate/.test(n) && /(maximum|amount|value|period|how many days|valid for)/.test(n)) return R330_BASE["Is there maximum number of days for which medicines can be purchased against a NA certificate?"];
+  if(/60 days|within 60|deadline|how many days.*submit|when should i submit/.test(n)) return R330_BASE["What is the time limit for submission of original medicine claim to Polyclinic?"];
+  if(/claim id|who provides|who will give|automatically.*claim|manually.*claim|when.*claim id/.test(n)) return R330_BASE["Who will give the claim ID?"];
+  if(/status|bpa portal|mobile app|track.*claim|check.*claim/.test(n)) return R330_BASE["Is there any facility to find the status of my claim?"];
+  if(/how long|how many months|when will.*bank|when can i expect payment|how long will i wait/.test(n) && /na medicine|reimbursement/.test(n)) return R330_BASE["How long does it take to get reimbursement amount in my bank?"];
+  if(/na certificate|prescription.*na|na medicines.*shown|who signs|separate form/.test(n)) return R330_BASE["Do I have to fill up a form to get Non-Availability (NA) certificate for Medicines"];
+  if(/documents|medicine bill|cancelled cheque|echs card|prescription.*endorsement/.test(n) && /na medicine|reimbursement claim/.test(n)) return R330_BASE["What documents are to be submitted for claiming reimbursement of NA medicines purchased?"];
+  if(/online|original bills|reports|contingent bill|submit.*documents/.test(n) && /claim|reimbursement/.test(n)) return R330_BASE["Is there a facility to complete reimbursement claim online?"];
+  if(/100 ?%|full reimbursement|pharmacy|na certificate/.test(n) && /medicine|prescription|purchase/.test(n)) return R330_BASE["If I buy medicines from a pharmacy , can I get 100 % reimbursement ?"];
+  if(/expense|expenses|reimburse/.test(n) && /(types|covered|medicine expenses|treatment at)/.test(n)) return R330_BASE["What expenses are Reimbursed ?"];
+  return null;
+}
+
+function getResult(q){const r330= r330Get(q); if(r330!==null) return {a:r330};
  const key=controlledKey(q);
  if(!key) return {a:FALLBACK,source:'FALLBACK'};
  const item=QA_INDEX.get(key) || NL_INDEX.get(key);
