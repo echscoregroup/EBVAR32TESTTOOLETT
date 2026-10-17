@@ -16,12 +16,17 @@ try {
   const ready = await page.evaluate(() => !!window.__EBVA_INTEGRATION_AUDIT__ && typeof window.__EBVA_INTEGRATION_AUDIT__.getResult === 'function' && typeof window.__EBVA_INTEGRATION_AUDIT__.getApprovedQA === 'function');
   if (!ready) throw new Error('Integrated candidate audit surface missing');
   const baseline = await page.evaluate(() => window.__EBVA_INTEGRATION_AUDIT__.getApprovedQA());
+  const answerByQuestion = new Map();
+  const key = q => String(q ?? '').toLowerCase().trim().replace(/[“”‘’]/g,'"').replace(/[?!,.;:]+/g,' ').replace(/\s+/g,' ').trim();
+  for (const x of [...(baseline.controlled||[]),...(baseline.card||[]),...(baseline.r330||[])]) answerByQuestion.set(key(x.q),x.a);
   const approved = [
     ...(baseline.controlled || []).map(x=>({q:x.q,a:x.a,source:'CONTROLLED_QA'})),
+    ...(baseline.card || []).map(x=>({q:x.q,a:x.a,source:'ECHS_CARD_QA'})),
+    ...(baseline.nl || []).map(x=>({q:x.nl,a:answerByQuestion.get(key(x.base_q)),source:'CONTROLLED_NL',base_q:x.base_q})),
     ...(baseline.r330 || []).map(x=>({q:x.q,a:x.a,source:'R330_QA'}))
   ];
   if (approved.length !== 412) {
-    results.push({suite:'BASELINE_412',id:'BASELINE-COUNT',question:'Count approved baseline records',expectedType:'COUNT=412',expectedSource:'',expectedAnswer:'412',actualType:'COUNT='+approved.length,actualSource:'',actualAnswer:String(approved.length),verdict:'FAIL',note:'Expected exact 412 approved records from the protected R3.4 copy',actual:JSON.stringify({controlled:baseline.controlled?.length,r330:baseline.r330?.length})});
+    results.push({suite:'BASELINE_412',id:'BASELINE-COUNT',question:'Count approved baseline question cases',expectedType:'COUNT=412',expectedSource:'',expectedAnswer:'412',actualType:'COUNT='+approved.length,actualSource:'',actualAnswer:String(approved.length),verdict:'FAIL',note:'Expected 83 CONTROLLED_QA + 90 ECHS_CARD_QA + 150 CONTROLLED_NL + 89 R330_QA = 412 cases',actual:JSON.stringify({controlled:baseline.controlled?.length,card:baseline.card?.length,nl:baseline.nl?.length,r330:baseline.r330?.length})});
   }
   for (let i=0;i<approved.length;i++) {
     const item=approved[i];
@@ -32,10 +37,10 @@ try {
         holder.innerHTML=renderResult(q,r);
         return {answer:holder.querySelector('.answer')?.textContent||'',source:r?.source||''};
       },item.q);
-      const pass=normExact(out.answer)===normExact(item.a);
-      results.push({suite:'BASELINE_412',id:'KB-'+String(i+1).padStart(3,'0'),question:item.q,expectedType:'BASELINE_EXACT',expectedSource:item.source,expectedAnswer:item.a,actualType:'BASELINE',actualSource:out.source,actualAnswer:out.answer,verdict:pass?'PASS':'FAIL',note:'Exact approved-answer preservation',actual:JSON.stringify(out)});
+      const pass=!!item.a && normExact(out.answer)===normExact(item.a);
+      results.push({suite:'BASELINE_412',id:'KB-'+String(i+1).padStart(3,'0'),question:item.q,expectedType:'BASELINE_EXACT',expectedSource:item.source+(item.base_q?' -> '+item.base_q:''),expectedAnswer:item.a||'',actualType:'BASELINE',actualSource:out.source,actualAnswer:out.answer,verdict:pass?'PASS':'FAIL',note:item.a?'Exact approved-answer preservation':'No approved base answer found for NL alias',actual:JSON.stringify(out)});
     } catch(e) {
-      results.push({suite:'BASELINE_412',id:'KB-'+String(i+1).padStart(3,'0'),question:item.q,expectedType:'BASELINE_EXACT',expectedSource:item.source,expectedAnswer:item.a,actualType:'ERROR',actualSource:'',actualAnswer:'',verdict:'FAIL',note:'Baseline comparison exception',actual:String(e)});
+      results.push({suite:'BASELINE_412',id:'KB-'+String(i+1).padStart(3,'0'),question:item.q,expectedType:'BASELINE_EXACT',expectedSource:item.source||'',expectedAnswer:item.a||'',actualType:'ERROR',actualSource:'',actualAnswer:'',verdict:'FAIL',note:'Baseline comparison exception',actual:String(e)});
     }
   }
   for (const test of oracle) {
