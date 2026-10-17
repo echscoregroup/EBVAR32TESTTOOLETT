@@ -1,0 +1,35 @@
+name: EBVA Intelligent automated ETT
+on:
+  push:
+    branches: [INTV134AUTOTEST]
+    paths:
+      - 'inttest/candidate/**'
+      - 'inttest/auto-ett/**'
+      - '.github/workflows/ett-intelligent.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  auto-ett:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout isolated test branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install test browser
+        working-directory: inttest/auto-ett
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Run automated expected-versus-actual ETT
+        run: npm --prefix inttest/auto-ett test
+      - name: Upload machine-generated ETT results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: EBVA-INT-AUTO-ETT-RESULTS
+          path: artifacts/auto-ett-results.csv
+          if-no-files-found: warn
