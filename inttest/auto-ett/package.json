@@ -1,0 +1,11 @@
+{
+  "name": "ebva-intelligent-auto-ett",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node auto-ett.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.55.0"
+  }
+}
