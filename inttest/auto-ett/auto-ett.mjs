@@ -59,7 +59,8 @@ try {
       const sourcePass = test.expectedType !== 'DIRECT' || out.actualSource === test.expectedSource;
       const answerPass = !test.expectedAnswer || norm(out.visibleAnswer) === norm(test.expectedAnswer);
       const pass = typePass && sourcePass && answerPass;
-      results.push({suite:'HR_CONFIRMED',id:test.id,question:test.question,expectedType:test.expectedType,expectedSource:test.expectedSource||'',expectedAnswer:test.expectedAnswer||'',actualType:out.actualType,actualSource:out.actualSource||'',integratedSource:out.integratedSource||'',actualAnswer:out.visibleAnswer,verdict:pass?'PASS':'FAIL',note:test.note,actual:JSON.stringify(out)});
+      const verdict = test.oracleStatus === 'NEEDS_REVIEW' ? 'UNRESOLVED' : (pass ? 'PASS' : 'FAIL');
+      results.push({suite:'HR_CONFIRMED',id:test.id,question:test.question,expectedType:test.expectedType,expectedSource:test.expectedSource||'',expectedAnswer:test.expectedAnswer||'',actualType:out.actualType,actualSource:out.actualSource||'',integratedSource:out.integratedSource||'',actualAnswer:out.visibleAnswer,verdict,note:test.note,actual:JSON.stringify(out)});
     } catch (e) {
       results.push({suite:'HR_CONFIRMED',id:test.id,question:test.question,expectedType:test.expectedType,expectedSource:test.expectedSource||'',expectedAnswer:test.expectedAnswer||'',actualType:'ERROR',actualSource:'',integratedSource:'',actualAnswer:'',verdict:'FAIL',note:test.note,actual:String(e)});
     }
@@ -69,8 +70,8 @@ fs.mkdirSync('artifacts',{recursive:true});
 const header=['suite','id','question','expectedType','expectedSource','expectedAnswer','actualType','actualSource','integratedSource','actualAnswer','verdict','note','actual'];
 const esc=v=>'"'+String(v??'').replaceAll('"','""')+'"';
 fs.writeFileSync('artifacts/auto-ett-results.csv',[header.join(','),...results.map(r=>header.map(k=>esc(r[k])).join(','))].join('\n')+'\n');
-const pass=results.filter(r=>r.verdict==='PASS').length, fail=results.length-pass;
+const pass=results.filter(r=>r.verdict==='PASS').length, fail=results.filter(r=>r.verdict==='FAIL').length, unresolved=results.filter(r=>r.verdict==='UNRESOLVED').length;
 const baselineRows=results.filter(r=>r.suite==='BASELINE_412'), hrRows=results.filter(r=>r.suite==='HR_CONFIRMED');
-console.log(JSON.stringify({candidate,baselineExpected:412,baselineExecuted:approvedCount(results),baselinePass:baselineRows.filter(r=>r.verdict==='PASS').length,baselineFail:baselineRows.filter(r=>r.verdict==='FAIL').length,hrTests:hrRows.length,hrPass:hrRows.filter(r=>r.verdict==='PASS').length,hrFail:hrRows.filter(r=>r.verdict==='FAIL').length,total:results.length,pass,fail,hrResults:hrRows.map(({id,expectedType,expectedSource,actualType,actualSource,verdict})=>({id,expectedType,expectedSource,actualType,actualSource,verdict}))},null,2));
-if (fail) process.exitCode=1;
+console.log(JSON.stringify({candidate,baselineExpected:412,baselineExecuted:approvedCount(results),baselinePass:baselineRows.filter(r=>r.verdict==='PASS').length,baselineFail:baselineRows.filter(r=>r.verdict==='FAIL').length,hrTests:hrRows.length,hrPass:hrRows.filter(r=>r.verdict==='PASS').length,hrFail:hrRows.filter(r=>r.verdict==='FAIL').length,hrUnresolved:hrRows.filter(r=>r.verdict==='UNRESOLVED').length,total:results.length,pass,fail,unresolved,hrResults:hrRows.map(({id,expectedType,expectedSource,actualType,actualSource,verdict})=>({id,expectedType,expectedSource,actualType,actualSource,verdict}))},null,2));
+if (fail || unresolved) process.exitCode=1;
 function approvedCount(rows){return rows.filter(r=>r.suite==='BASELINE_412'&&r.id!=='BASELINE-COUNT').length;}
