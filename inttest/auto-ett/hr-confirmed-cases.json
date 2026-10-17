@@ -4,28 +4,32 @@
     "question": "I am 72. Does my age automatically allow direct access to an MH specialist for routine OPD?",
     "expectedType": "DIRECT",
     "expectedSource": "BASE-070",
-    "note": "User-supplied oracle; question age 72 vs BASE-070 threshold 75+ is intentionally preserved as given."
+    "note": "User-supplied oracle; question age 72 vs BASE-070 threshold 75+ is intentionally preserved as given.",
+    "expectedAnswer": "An eligible beneficiary aged 75 years and above does not require a Polyclinic (PC) referral for Military Hospital (MH) Specialist OPD consultation, on the designated Specialist OPD day."
   },
   {
     "id": "HR15",
     "question": "I am over 75, but my question is about an ordinary empanelled hospital, not an MH. Does the MH exception apply?",
     "expectedType": "DIRECT",
     "expectedSource": "BASE-020",
-    "note": "Direct EH OPD age rule."
+    "note": "Direct EH OPD age rule.",
+    "expectedAnswer": "For 70+ Beneficiaries, direct OPD at Empanelled Hospital is available without a Referral."
   },
   {
     "id": "HR38",
     "question": "My dependent needs routine treatment at an MH. Does the emergency exception automatically make the dependent eligible for routine OPD?",
     "expectedType": "DIRECT",
     "expectedSource": "BASE-078",
-    "note": "User-confirmed dependent eligibility/referral rule."
+    "note": "User-confirmed dependent eligibility/referral rule.",
+    "expectedAnswer": "ESM, Spouse and Dependent Beneficiaries below 25 years can go to Military Hospital (MH) for treatment only when the Polyclinic (PC) issues a referral."
   },
   {
     "id": "HR43",
     "question": "I have a prescription but no original bill. Is that enough for reimbursement?",
     "expectedType": "DIRECT",
     "expectedSource": "RMB-009-NL02",
-    "note": "User-confirmed expected answer; current frozen V1.34 candidate may clarify instead."
+    "note": "User-confirmed expected answer; current frozen V1.34 candidate may clarify instead.",
+    "expectedAnswer": "Medicine bill & Prescription with NA endorsement in original, copy of cancelled cheque & ECHS Card."
   },
   {
     "id": "HR60",
