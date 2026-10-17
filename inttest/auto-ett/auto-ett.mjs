@@ -64,7 +64,7 @@ try {
       results.push({suite:'HR_CONFIRMED',id:test.id,question:test.question,expectedType:test.expectedType,expectedSource:test.expectedSource||'',expectedAnswer:test.expectedAnswer||'',actualType:'ERROR',actualSource:'',integratedSource:'',actualAnswer:'',verdict:'FAIL',note:test.note,actual:String(e)});
     }
   }
-} finally { await browser.close(); }
+} catch (fatal) { results.push({suite:'HARNESS',id:'FATAL',question:'Harness-level failure before completion',expectedType:'RUN_COMPLETES',expectedSource:'',expectedAnswer:'',actualType:'ERROR',actualSource:'',integratedSource:'',actualAnswer:'',verdict:'FAIL',note:'Harness-level exception captured so the CSV is still emitted',actual:String(fatal?.stack||fatal)}); console.error('HARNESS_FATAL', fatal?.stack||fatal); } finally { await browser.close().catch(()=>{}); }
 fs.mkdirSync('artifacts',{recursive:true});
 const header=['suite','id','question','expectedType','expectedSource','expectedAnswer','actualType','actualSource','integratedSource','actualAnswer','verdict','note','actual'];
 const esc=v=>'"'+String(v??'').replaceAll('"','""')+'"';
