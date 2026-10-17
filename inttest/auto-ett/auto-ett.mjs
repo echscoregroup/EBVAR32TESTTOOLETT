@@ -56,7 +56,7 @@ try {
         return {visibleAnswer,integratedSource:r?.source||null,actualType:type,actualSource:source};
       }, test.question);
       const typePass = out.actualType === test.expectedType;
-      const sourcePass = test.expectedType !== 'DIRECT' || out.actualSource === test.expectedSource;
+      const sourcePass = !test.expectedSource || out.actualSource === test.expectedSource;
       const answerPass = !test.expectedAnswer || norm(out.visibleAnswer) === norm(test.expectedAnswer);
       const pass = typePass && sourcePass && answerPass;
       const verdict = test.oracleStatus === 'NEEDS_REVIEW' ? 'UNRESOLVED' : (pass ? 'PASS' : 'FAIL');
