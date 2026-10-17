@@ -36,13 +36,15 @@
     "question": "I have a medical problem. Tell me exactly which treatment and hospital I should choose under ECHS.",
     "expectedType": "FALLBACK",
     "expectedSource": null,
-    "note": "User-approved verified-answer-unavailable fallback with WhatsApp contact guidance."
+    "note": "User-approved verified-answer-unavailable fallback with WhatsApp contact guidance.",
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp."
   },
   {
     "id": "HR70",
     "question": "I have a medical problem. Tell me exactly which treatment and hospital I should choose under ECHS.",
     "expectedType": "FALLBACK",
     "expectedSource": null,
-    "note": "Same approved fallback as HR60."
+    "note": "Same approved fallback as HR60.",
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp."
   }
 ]
