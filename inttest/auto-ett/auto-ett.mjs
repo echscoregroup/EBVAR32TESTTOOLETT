@@ -1,10 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { pathToFileURL, fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
-const candidate = path.resolve('inttest/candidate/EBVA_R34_INT_V134_INTEGRATED_TEST.html');
-const oracle = JSON.parse(fs.readFileSync('inttest/auto-ett/hr-confirmed-cases.json','utf8'));
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const candidate = path.join(repoRoot, 'inttest/candidate/EBVA_R34_INT_V134_INTEGRATED_TEST.html');
+const oracle = JSON.parse(fs.readFileSync(path.join(repoRoot, 'inttest/auto-ett/hr-confirmed-cases.json'),'utf8'));
 if (!fs.existsSync(candidate)) throw new Error('Integrated candidate HTML missing: '+candidate);
 const browser = await chromium.launch({headless:true});
 const page = await browser.newPage();
@@ -66,10 +67,10 @@ try {
     }
   }
 } catch (fatal) { results.push({suite:'HARNESS',id:'FATAL',question:'Harness-level failure before completion',expectedType:'RUN_COMPLETES',expectedSource:'',expectedAnswer:'',actualType:'ERROR',actualSource:'',integratedSource:'',actualAnswer:'',verdict:'FAIL',note:'Harness-level exception captured so the CSV is still emitted',actual:String(fatal?.stack||fatal)}); console.error('HARNESS_FATAL', fatal?.stack||fatal); } finally { await browser.close().catch(()=>{}); }
-fs.mkdirSync('artifacts',{recursive:true});
+fs.mkdirSync(path.join(repoRoot,'artifacts'),{recursive:true});
 const header=['suite','id','question','expectedType','expectedSource','expectedAnswer','actualType','actualSource','integratedSource','actualAnswer','verdict','note','actual'];
 const esc=v=>'"'+String(v??'').replaceAll('"','""')+'"';
-fs.writeFileSync('artifacts/auto-ett-results.csv',[header.join(','),...results.map(r=>header.map(k=>esc(r[k])).join(','))].join('\n')+'\n');
+fs.writeFileSync(path.join(repoRoot,'artifacts/auto-ett-results.csv'),[header.join(','),...results.map(r=>header.map(k=>esc(r[k])).join(','))].join('\n')+'\n');
 const pass=results.filter(r=>r.verdict==='PASS').length, fail=results.filter(r=>r.verdict==='FAIL').length, unresolved=results.filter(r=>r.verdict==='UNRESOLVED').length;
 const baselineRows=results.filter(r=>r.suite==='BASELINE_412'), hrRows=results.filter(r=>r.suite==='HR_CONFIRMED');
 console.log(JSON.stringify({candidate,baselineExpected:412,baselineExecuted:approvedCount(results),baselinePass:baselineRows.filter(r=>r.verdict==='PASS').length,baselineFail:baselineRows.filter(r=>r.verdict==='FAIL').length,hrTests:hrRows.length,hrPass:hrRows.filter(r=>r.verdict==='PASS').length,hrFail:hrRows.filter(r=>r.verdict==='FAIL').length,hrUnresolved:hrRows.filter(r=>r.verdict==='UNRESOLVED').length,total:results.length,pass,fail,unresolved,hrResults:hrRows.map(({id,expectedType,expectedSource,actualType,actualSource,verdict})=>({id,expectedType,expectedSource,actualType,actualSource,verdict}))},null,2));
