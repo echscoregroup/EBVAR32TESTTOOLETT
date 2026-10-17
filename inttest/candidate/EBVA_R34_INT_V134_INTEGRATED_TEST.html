@@ -882,6 +882,6 @@ globalThis.__EBVA_INTELLIGENT_RESOLVER__={decide,KB,norm,purpose,score};
 
 })();
 // Test-only audit surface for GitHub ETT; no beneficiary UI control is added.
-globalThis.__EBVA_INTEGRATION_AUDIT__={getResult,decide:q=>globalThis.__EBVA_INTELLIGENT_RESOLVER__.decide(q)};
+globalThis.__EBVA_INTEGRATION_AUDIT__={getResult,decide:q=>globalThis.__EBVA_INTELLIGENT_RESOLVER__.decide(q),getApprovedQA:()=>({controlled:CONTROLLED_QA.map(x=>({q:x.q,a:x.a})),r330:Array.from(R330_QA.entries()).map(([q,a])=>({q,a}))})};
 </script>
 </body></html>
