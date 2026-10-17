@@ -1,50 +1,632 @@
 [
   {
+    "id": "HR01",
+    "question": "Who is eligible for treatment at a Military Hospital (MH)?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR02",
+    "question": "Which ECHS beneficiaries are not eligible for routine OPD at an MH?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR03",
+    "question": "Can a dependent aged 26 receive routine OPD treatment at an MH?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR04",
+    "question": "Can a dependent aged 26 be treated at an MH in a genuine emergency?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR05",
+    "question": "Are an ESM, spouse and dependent all covered by the same MH OPD eligibility rule?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR06",
+    "question": "Can I go directly to an empanelled hospital in an emergency without a referral?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Under an Emergency Medical condition, patient can go to Emergency Room (ER) of Empanelled Hospital (EH) directly with a valid ECHS Card or Temporary Slip.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR07",
+    "question": "Can I go directly to an empanelled hospital for routine OPD without a referral?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Under Non Emergency Medical condition OPD, Beneficiaries below 70 years must obtain a Referral. For 70+ Beneficiaries, direct OPD at Empanelled Hospital is available without a Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR08",
+    "question": "My condition is serious, but the doctor has not confirmed it is an emergency. Can I assume referral is unnecessary?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR09",
+    "question": "If I am admitted to an empanelled hospital in an emergency, must I first obtain a referral?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Under an Emergency Medical condition, patient can go to Emergency Room (ER) of Empanelled Hospital (EH) directly with a valid ECHS Card or Temporary Slip.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR10",
+    "question": "Does the emergency exception mean I can bypass referral rules for every later consultation?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "For 70+ Beneficiaries, direct OPD at Empanelled Hospital is available without a Referral. Under Non Emergency Medical condition OPD, Beneficiaries below 70 years must obtain a Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR11",
+    "question": "I am 65. Can I go directly to an empanelled hospital for routine OPD without a referral?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Under Non Emergency Medical condition OPD, Beneficiaries below 70 years must obtain a Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
     "id": "HR12",
     "question": "I am 72. Does my age automatically allow direct access to an MH specialist for routine OPD?",
     "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
     "expectedSource": "BASE-070",
-    "note": "User-supplied oracle; question age 72 vs BASE-070 threshold 75+ is intentionally preserved as given.",
-    "expectedAnswer": "An eligible beneficiary aged 75 years and above does not require a Polyclinic (PC) referral for Military Hospital (MH) Specialist OPD consultation, on the designated Specialist OPD day."
+    "expectedAnswer": "An eligible beneficiary aged 75 years and above does not require a Polyclinic (PC) referral for Military Hospital (MH) Specialist OPD consultation, on the designated Specialist OPD day.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR13",
+    "question": "I am an ESM aged 75. Can I attend an MH specialist OPD without a referral?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "An eligible beneficiary aged 75 years and above does not require a Polyclinic (PC) referral for Military Hospital (MH) Specialist OPD consultation, on the designated Specialist OPD day.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR14",
+    "question": "My dependent is 25. Is the rule the same as for a dependent aged 26?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
   },
   {
     "id": "HR15",
     "question": "I am over 75, but my question is about an ordinary empanelled hospital, not an MH. Does the MH exception apply?",
     "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
     "expectedSource": "BASE-020",
-    "note": "Direct EH OPD age rule.",
-    "expectedAnswer": "For 70+ Beneficiaries, direct OPD at Empanelled Hospital is available without a Referral."
+    "expectedAnswer": "For 70+ Beneficiaries, direct OPD at Empanelled Hospital is available without a Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR16",
+    "question": "Can I obtain an ECHS referral from any Polyclinic in India?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Referral can be obtained from any ECHS Polyclinic in India.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR17",
+    "question": "Can I use a specialist’s prescription itself as my ECHS referral?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "When you get a Military or Empanelled Hospital specialist prescription, you go back to the Polyclinic doctor to get the Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR18",
+    "question": "My referral has expired. Can I still use it for a new consultation?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "No.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR19",
+    "question": "Is a referral valid for six months for cancer treatment?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": "BASE-033",
+    "expectedAnswer": "Chronic condition treatment Referral is valid for six months.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR20",
+    "question": "Can I use one referral for OPD and later IPD admission, or do I need another referral?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR21",
+    "question": "What is the difference between treatment at an MH and an empanelled hospital (EH)?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR22",
+    "question": "I have an MH specialist’s recommendation. Must I obtain a separate referral or approval for every investigation at an EH?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "When you get a Military or Empanelled Hospital specialist prescription, you go back to the Polyclinic doctor to get the Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR23",
+    "question": "Can I choose any empanelled hospital after receiving an ECHS referral?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Once you obtain a Referral, you can choose the EH in that particular Area. Once your Referral is accepted and treatment commenced, you cannot change the hospital for that particular Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR24",
+    "question": "The hospital is empanelled, but the speciality I need may not be empanelled there. Can I assume the treatment is covered?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR25",
+    "question": "The hospital has stopped receiving ECHS referrals. Can I still go there because it is listed as empanelled?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "The hospital will not provide the planned treatment even if you have the referral, except in an emergency situation.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR26",
+    "question": "Does an empanelled hospital have to provide cashless treatment under ECHS?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "An EMP HOSP or EH or Empanelled Hospital is one who have signed a contract with ECHS to provide cashless treatment for all ECHS beneficiaries.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR27",
+    "question": "The empanelled hospital is asking me to deposit money for admission. What should I do?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "On top of the Referral, contact numbers of Polyclinic OIC and the Joint Director Hospital Services (JD HS) of the concerned Regional Centre are available. They will help.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR28",
+    "question": "I paid an empanelled hospital myself. Will ECHS automatically reimburse the amount?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "On top of the Referral, contact numbers of Polyclinic OIC and the Joint Director Hospital Services (JD HS) of the concerned Regional Centre are available. They will help.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR29",
+    "question": "I received emergency treatment at a non-empanelled hospital and paid the bill. How do I seek consideration of reimbursement?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR30",
+    "question": "Can I claim reimbursement for any treatment I choose at any non-empanelled hospital?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR31",
+    "question": "I have lost my 64 KB ECHS Card. What should I do?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR32",
+    "question": "My ECHS Card is damaged but has not been lost. What should I do?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR33",
+    "question": "My card is faulty and cannot be read by the hospital. Is the procedure the same as for a lost card?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR34",
+    "question": "The mobile number registered with ECHS is wrong. How do I correct it?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR35",
+    "question": "My new 64 KB card has already been printed, but the printed details are incorrect. How can I correct them?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR36",
+    "question": "I am an ESM. Does the answer for my eligibility also automatically apply to my spouse?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR37",
+    "question": "My spouse needs treatment at an MH. Which eligibility rule applies?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": "BASE-078",
+    "expectedAnswer": "ESM, Spouse and Dependent Beneficiaries below 25 years can go to Military Hospital (MH) for treatment only when the Polyclinic (PC) issues a referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
   },
   {
     "id": "HR38",
     "question": "My dependent needs routine treatment at an MH. Does the emergency exception automatically make the dependent eligible for routine OPD?",
     "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
     "expectedSource": "BASE-078",
-    "note": "User-confirmed dependent eligibility/referral rule.",
-    "expectedAnswer": "ESM, Spouse and Dependent Beneficiaries below 25 years can go to Military Hospital (MH) for treatment only when the Polyclinic (PC) issues a referral."
+    "expectedAnswer": "ESM, Spouse and Dependent Beneficiaries below 25 years can go to Military Hospital (MH) for treatment only when the Polyclinic (PC) issues a referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR39",
+    "question": "Can my parents receive routine MH treatment just because they are listed as my family members?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": "BASE-078",
+    "expectedAnswer": "ESM, Spouse and Dependent Beneficiaries below 25 years can go to Military Hospital (MH) for treatment only when the Polyclinic (PC) issues a referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR40",
+    "question": "I am asking for my spouse, but the answer options refer to the ESM and dependent children. Which rule applies to my spouse?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR41",
+    "question": "What is the maximum medicine period and value permitted under an NA certificate?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": "RMB-012",
+    "expectedAnswer": "Maximum number of days is 30 days and value not exceeding Rs 25000.00.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR42",
+    "question": "What documents are required to claim reimbursement for treatment at a non-empanelled hospital?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
   },
   {
     "id": "HR43",
     "question": "I have a prescription but no original bill. Is that enough for reimbursement?",
     "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
     "expectedSource": "RMB-009-NL02",
-    "note": "User-confirmed expected answer; current frozen V1.34 candidate may clarify instead.",
-    "expectedAnswer": "Medicine bill & Prescription with NA endorsement in original, copy of cancelled cheque & ECHS Card."
+    "expectedAnswer": "Medicine bill & Prescription with NA endorsement in original, copy of cancelled cheque & ECHS Card.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR44",
+    "question": "Are reimbursement rules for medicines the same as reimbursement rules for hospital treatment?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR45",
+    "question": "Why might reimbursement from a non-Empanelled private hospital be substantially less than the amount paid?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": "BASE-045",
+    "expectedAnswer": "Non Empanelled Hospital rates and ECHS rates are different and hence reimbursement may be lower than the amount actually paid at a non-Empanelled hospital.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR46",
+    "question": "What should I do about my ECHS Card?",
+    "expectedType": "CLARIFY",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR47",
+    "question": "I have a problem with my referral. Can you help?",
+    "expectedType": "CLARIFY",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR48",
+    "question": "I need treatment at a hospital. What is the procedure?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR49",
+    "question": "My card details are wrong. How do I correct them?",
+    "expectedType": "CLARIFY",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR50",
+    "question": "Can I go to the hospital without a referral?",
+    "expectedType": "CLARIFY",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR51",
+    "question": "Please tell me: Can I obtain a referral from any ECHS Polyclinic in India?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Referral can be obtained from any ECHS Polyclinic in India.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR52",
+    "question": "I would like to know whether a specialist prescription can be used to obtain a referral.",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "When you get a Military or Empanelled Hospital specialist prescription, you go back to the Polyclinic doctor to get the Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR53",
+    "question": "If it is an emergency, can I go straight to an empanelled hospital?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Under an Emergency Medical condition, patient can go to Emergency Room (ER) of Empanelled Hospital (EH) directly with a valid ECHS Card or Temporary Slip.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR54",
+    "question": "Can you explain the cashless treatment rule at an empanelled hospital?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "An EMP HOSP or EH or Empanelled Hospital is one who have signed a contract with ECHS to provide cashless treatment for all ECHS beneficiaries.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR55",
+    "question": "Does the same rule apply to a lost card and a damaged card?",
+    "expectedType": "CLARIFY",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR56",
+    "question": "Which is the best private hospital in my city for my condition?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR57",
+    "question": "Can I lend my ECHS Card to a friend so they can receive treatment?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR58",
+    "question": "Is every treatment at every hospital completely free under ECHS?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR59",
+    "question": "What is the latest reimbursement limit for an unsupported procedure?",
+    "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
   },
   {
     "id": "HR60",
     "question": "I have a medical problem. Tell me exactly which treatment and hospital I should choose under ECHS.",
     "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
     "expectedSource": null,
-    "note": "User-approved verified-answer-unavailable fallback with WhatsApp contact guidance.",
-    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp."
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR61",
+    "question": "I am 75 years old. Does the age-related referral exception for a Military Hospital automatically apply when I visit an Empanelled Hospital?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": "BASE-020",
+    "expectedAnswer": "For 70+ Beneficiaries, direct OPD at Empanelled Hospital is available without a Referral.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR62",
+    "question": "My referral has expired. Can I still use it for a new consultation?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "No.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR63",
+    "question": "Can one referral be used for both OPD and IPD at an Empanelled Hospital?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "No.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR64",
+    "question": "I have lost my 64 KB ECHS Card. What should I do?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "WATCH MY VIDEO V71 in HELPING HANDS FOR ECHS YOUTUBE CHANNEL. Briefly, Login to echs.sourceinfosys.com website. Block Card that is lost. Apply for New Card & Make Payment. Print Temp Slip, get it signed by any OIC Polyclinic to get all ECHS Services, till you get the new card.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR65",
+    "question": "My ECHS Card is damaged or unreadable. What should I do?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "Watch my Video V127 in HELPING HANDS FOR ECHS YOUTUBE CHANNEL. Briefly meet OIC Polyclinic who has the facilities to check the card and narrow down to the fault. Once it is confirmed that the card is faulty, OIC will take action for replacement of the faulty card.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
+  },
+  {
+    "id": "HR66",
+    "question": "I changed my registered mobile number. Will my ECHS Card stop working?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR67",
+    "question": "Does ESM eligibility automatically apply to my spouse?",
+    "expectedType": "UNRESOLVED",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR68",
+    "question": "Can I go to a hospital for routine OPD without a referral?",
+    "expectedType": "CLARIFY",
+    "oracleStatus": "NEEDS_REVIEW",
+    "expectedSource": null,
+    "expectedAnswer": "",
+    "note": "HR register does not establish an exact independent scoring oracle; actual output captured but not marked PASS."
+  },
+  {
+    "id": "HR69",
+    "question": "The hospital has stopped receiving ECHS referrals. Can I still go there with a referral?",
+    "expectedType": "DIRECT",
+    "oracleStatus": "LOCKED",
+    "expectedSource": null,
+    "expectedAnswer": "The hospital will not provide the planned treatment even if you have the referral, except in an emergency situation.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
   },
   {
     "id": "HR70",
     "question": "I have a medical problem. Tell me exactly which treatment and hospital I should choose under ECHS.",
     "expectedType": "FALLBACK",
+    "oracleStatus": "LOCKED",
     "expectedSource": null,
-    "note": "Same approved fallback as HR60.",
-    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp."
+    "expectedAnswer": "VERIFIED ANSWER NOT AVAILABLE AT THIS TIME\nFor further guidance, please contact Cdr Santhanam through WhatsApp.",
+    "note": "Expected wording transcribed from HR register/user-confirmed oracle."
   }
 ]
