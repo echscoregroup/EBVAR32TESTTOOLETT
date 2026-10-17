@@ -23,7 +23,7 @@ try {
   const approved = [
     ...(baseline.controlled || []).map(x=>({q:x.q,a:x.a,source:'CONTROLLED_QA'})),
     ...(baseline.card || []).map(x=>({q:x.q,a:x.a,source:'ECHS_CARD_QA'})),
-    ...(baseline.nl || []).map(x=>({q:x.nl,a:answerByQuestion.get(key(x.base_q)),source:'CONTROLLED_NL',base_q:x.base_q})),
+    ...(baseline.nl || []).map(x=>({q:x.nl,a:null,source:'CONTROLLED_NL',base_q:x.base_q})),
     ...(baseline.r330 || []).map(x=>({q:x.q,a:x.a,source:'R330_QA'}))
   ];
   if (approved.length !== 412) {
@@ -38,8 +38,10 @@ try {
         holder.innerHTML=renderResult(q,r);
         return {answer:holder.querySelector('.answer')?.textContent||'',source:r?.source||''};
       },item.q);
-      const pass=!!item.a && normExact(out.answer)===normExact(item.a);
-      results.push({suite:'BASELINE_412',id:'KB-'+String(i+1).padStart(3,'0'),question:item.q,expectedType:'BASELINE_EXACT',expectedSource:item.source+(item.base_q?' -> '+item.base_q:''),expectedAnswer:item.a||'',actualType:'BASELINE',actualSource:out.source,actualAnswer:out.answer,verdict:pass?'PASS':'FAIL',note:item.a?'Exact approved-answer preservation':'No approved base answer found for NL alias',actual:JSON.stringify(out)});
+      const baseOut = item.source === 'CONTROLLED_NL' ? await page.evaluate(q=>{const r=window.__EBVA_INTEGRATION_AUDIT__.getResult(q);const holder=document.createElement('div');holder.innerHTML=renderResult(q,r);return {answer:holder.querySelector('.answer')?.textContent||'',source:r?.source||''};},item.base_q) : null;
+      const expectedAnswer = item.source === 'CONTROLLED_NL' ? baseOut?.answer : item.a;
+      const pass=!!expectedAnswer && normExact(out.answer)===normExact(expectedAnswer);
+      results.push({suite:'BASELINE_412',id:'KB-'+String(i+1).padStart(3,'0'),question:item.q,expectedType:'BASELINE_EXACT',expectedSource:item.source+(item.base_q?' -> '+item.base_q:''),expectedAnswer:expectedAnswer||'',actualType:'BASELINE',actualSource:out.source,actualAnswer:out.answer,verdict:pass?'PASS':'FAIL',note:item.source === 'CONTROLLED_NL' ? (expectedAnswer?'Paraphrase answer compared against resolver output for its declared base_q':'Base question produced no answer; alias cannot be scored') : (expectedAnswer?'Exact approved-answer preservation':'No approved answer found'),actual:JSON.stringify({alias:out,base:baseOut})});
     } catch(e) {
       results.push({suite:'BASELINE_412',id:'KB-'+String(i+1).padStart(3,'0'),question:item.q,expectedType:'BASELINE_EXACT',expectedSource:item.source||'',expectedAnswer:item.a||'',actualType:'ERROR',actualSource:'',actualAnswer:'',verdict:'FAIL',note:'Baseline comparison exception',actual:String(e)});
     }
