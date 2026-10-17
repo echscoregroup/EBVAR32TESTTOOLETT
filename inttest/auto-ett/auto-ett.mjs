@@ -19,7 +19,7 @@ try {
       const actualType = actual?.type === 'CLEAR' ? 'DIRECT' : actual?.type === 'AMB' ? 'CLARIFY' : actual?.type === 'MULTI' ? 'MULTI' : actual?.type === 'NO' ? 'FALLBACK' : 'ERROR';
       const source = actual?.best?.id ?? actual?.best?.sourceId ?? actual?.best?.source_id ?? null;
       const answer = actual?.best?.answer ?? actual?.answer ?? '';
-      const norm = value => String(value ?? '').normalize('NFKC').toLowerCase().replace(/[^\\p{L}\\p{N}]+/gu,' ').trim().replace(/\\s+/g,' ');
+      const norm = value => String(value ?? '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim().replace(/\s+/g,' ');
       const typePass = actualType === test.expectedType;
       const sourcePass = test.expectedType !== 'DIRECT' || source === test.expectedSource;
       const answerPass = !test.expectedAnswer || norm(answer) === norm(test.expectedAnswer);
